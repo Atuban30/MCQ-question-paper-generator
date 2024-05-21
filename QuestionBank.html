@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Question Bank</title>
+    <link rel="stylesheet" href="questionbank.css">
+    <script src="https://kit.fontawesome.com/3759c1654e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="form-box">
+            <h1>Enter Question</h1>
+            <form id="questionForm">
+                <div class="input-group">
+                    <div class="input-field">
+                        <i class="fa-solid fa-q"></i>
+                        <input type="text" id="questionText" placeholder="Enter your question">
+                    </div>
+                    <div class="input-field">
+                        <i class="fa-solid fa-angles-right"></i>
+                        <input type="text" id="option1" placeholder="Option 1">
+                    </div>
+                    <div class="input-field">
+                        <i class="fa-solid fa-angles-right"></i>
+                        <input type="text" id="option2" placeholder="Option 2">
+                    </div>
+                    <div class="input-field">
+                        <i class="fa-solid fa-angles-right"></i>
+                        <input type="text" id="option3" placeholder="Option 3">
+                    </div>
+                    <div class="input-field">
+                        <i class="fa-solid fa-angles-right"></i>
+                        <input type="text" id="option4" placeholder="Option 4">
+                    </div>
+                    <div class="input-field">
+                        <i class="fa-solid fa-a"></i>
+                        <input type="text" id="correctAnswer" placeholder="Correct Answer">
+                    </div>
+                </div>
+                <button type="button" onclick="submitQuestion()">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        async function submitQuestion() {
+            const questionText = document.getElementById('questionText').value;
+            const option1 = document.getElementById('option1').value;
+            const option2 = document.getElementById('option2').value;
+            const option3 = document.getElementById('option3').value;
+            const option4 = document.getElementById('option4').value;
+            const correctAnswer = document.getElementById('correctAnswer').value;
+
+            // Check if any field is empty
+            if (!questionText || !option1 || !option2 || !option3 || !option4 || !correctAnswer) {
+                alert('Please fill all the fields');
+                return;
+            }
+
+            const response = await fetch('http://localhost:5000/api/questions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    questionText,
+                    answerOptions: [option1, option2, option3, option4],
+                    correctAnswer
+                })
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert('Question submitted successfully!');
+                // Clear the form
+                document.getElementById('questionForm').reset();
+            } else {
+                alert('Error submitting question: ' + result.error);
+            }
+        }
+    </script>
+</body>
+</html>

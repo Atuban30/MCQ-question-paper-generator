@@ -1,0 +1,65 @@
+*{
+    margin:0;
+    padding:0;
+
+.plus-jakarta-sans-<uniquifier> {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+    box-sizing: border-box;
+}
+
+.container{
+    width:100%;
+    height: 100vh;
+    background-image: url(Design.jpg);
+    background-position:center;
+    background-size: cover;
+    position: absolute;
+}
+.form-box{
+    width:100%;
+    max-width:700px;
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform : translate(-50%,-50%);
+    padding:90px 60px 70px;
+    text-align: center;
+
+}
+.form-box h1{
+    color: darkblue;
+    font-size: xxx-large;
+}
+.input-field{
+    background: #fff;
+    margin: 20px 0;
+    border-radius: 3px;
+    display:flex;
+    align-items: center;
+    max-height: 40px;
+}
+input{
+    width:100%;
+    background: transparent;
+    border:0;
+    outline:0;
+    padding: 25px;
+    font-size: 17px;
+}
+.input-field i{
+    margin-left: 15px;
+    color: #999;
+}
+#questionForm button{
+    background: #efba06;
+    color:black;
+    height: 40px;
+    width: 70px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: larger;
+}

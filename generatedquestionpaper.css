@@ -1,0 +1,41 @@
+.question{
+    margin-bottom: 20px;
+}
+.options-label {
+    font-weight: bold;
+}
+
+img{
+
+    width:100px;
+    display: inline-flex;
+    margin: 20px;
+}
+.together{
+    text-align: center;
+}
+.together h1{
+    margin: 0;
+    padding: 0;
+}
+.together h3{
+    margin: 0;
+    padding: 0;
+}
+.together p{
+    margin: 0;
+    padding: 0;
+}
+#max{
+    text-align: right;
+}
+button{
+    color: black;
+    font-weight: bold;
+    padding: 10px;
+    background: white;
+    margin: 50px;
+    left:50%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+}

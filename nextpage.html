@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Choose</title>
+    <link rel="stylesheet" href="stylenext.css">
+</head>
+<body>
+<div id="contain">
+    <div class="details">
+    <h1>Choose what you want to do next!</h1>
+    <div id="buttongroup">
+            <button type="button" id="button1">Generate Question Paper</button>
+            <button type="button" id="button2">Question Bank</button>
+    </div>
+    </div>
+</div>
+<script>
+    let button1 = document.getElementById("button1");
+    let button2 = document.getElementById("button2");
+
+    function handlebutton1click(){
+        window.location.href = "QuestionPaper.html";
+    }
+    function handlebutton2click(){
+        window.location.href = "QuestionBank.html";
+    }
+
+    button1.addEventListener("click",handlebutton1click);
+    button2.addEventListener("click",handlebutton2click);
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Question Paper</title>
+    <link rel="stylesheet" href="questionPaper.css">
+</head>
+<body>
+    <form id="questionForm">
+        <h1>Choose questions for your Question Paper</h1>
+        <div id="questionsContainer"></div>
+        <button type="button" onclick="generateQuestionPaper()">Generate Question Paper</button>
+    </form>
+
+    <script>
+        async function fetchQuestions() {
+            const response = await fetch('http://localhost:5001/api/questions');
+            const questions = await response.json();
+            const questionsContainer = document.getElementById('questionsContainer');
+
+            questions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question');
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.name = 'selectedQuestions';
+                checkbox.value = index;
+
+                const questionLabel = document.createElement('label');
+                questionLabel.textContent = question.questionText;
+                questionLabel.insertBefore(checkbox, questionLabel.firstChild); // Insert checkbox before text
+
+                questionDiv.appendChild(questionLabel);
+
+                questionsContainer.appendChild(questionDiv);
+            });
+        }
+
+        function generateQuestionPaper() {
+            const selectedQuestions = document.querySelectorAll('input[name="selectedQuestions"]:checked');
+
+            // Check if at least one checkbox is selected
+            if (selectedQuestions.length === 0) {
+                alert("Please select at least one question to generate the question paper.");
+                return; // Exit the function
+            }
+
+            const selectedIndexes = Array.from(selectedQuestions).map(checkbox => parseInt(checkbox.value));
+
+            localStorage.setItem('selectedQuestions', JSON.stringify(selectedIndexes));
+            window.location.href = 'generatedQuestionPaper.html';
+        }
+
+        fetchQuestions();
+    </script>
+</body>
+</html>

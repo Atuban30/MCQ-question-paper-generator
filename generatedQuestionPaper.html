@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Generated MCQ Question Paper</title>
+    <link rel="stylesheet" href="generatedquestionpaper.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <img src="adamas_logo.png" alt="Adamas_logo">
+    <div class="together">
+        <h1>ADAMAS UNIVERSITY</h1>
+        <h3>MULTIPLE CHOICE QUESTION EXAMINATION</h3>
+        <p>(Academic Session: 2023-24)</p>
+    </div>
+    <hr>
+    <p id="max">Maximum Marks: 10</p>
+    <div id="generatedQuestionsContainer"></div>
+    <button id="saveButton" onclick="generatePDF()">Save as PDF</button>
+
+    <script>
+        async function fetchSelectedQuestions() {
+            try {
+                const response = await fetch('http://localhost:5001/api/questions');
+                if (!response.ok) throw new Error('Error fetching questions');
+                const questions = await response.json();
+                const selectedIndexes = JSON.parse(localStorage.getItem('selectedQuestions'));
+                const generatedQuestionsContainer = document.getElementById('generatedQuestionsContainer');
+
+                selectedIndexes.forEach((index, i) => {
+                    const question = questions[index];
+
+                    const questionDiv = document.createElement('div');
+                    questionDiv.classList.add('question');
+
+                    const questionText = document.createElement('p');
+                    questionText.textContent = `${i + 1}. ${question.questionText}`;
+
+                    const optionsLabel = document.createElement('p');
+                    optionsLabel.textContent = 'Options:';
+                    optionsLabel.classList.add('options-label');
+
+                    const optionsList = document.createElement('ul');
+                    optionsList.classList.add('options-list');
+                    question.answerOptions.forEach(option => {
+                        const optionItem = document.createElement('li');
+                        optionItem.textContent = option;
+                        optionItem.classList.add('option-item');
+                        optionsList.appendChild(optionItem);
+                    });
+
+                    questionDiv.appendChild(questionText);
+                    questionDiv.appendChild(optionsLabel);
+                    questionDiv.appendChild(optionsList);
+
+                    generatedQuestionsContainer.appendChild(questionDiv);
+                });
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+
+        function generatePDF() {
+            const element = document.body.cloneNode(true); // Clone the body element
+            const saveAsPDFButton = element.querySelector('#saveButton'); // Find the Save as PDF button
+            if (saveAsPDFButton) {
+                saveAsPDFButton.remove(); // Remove the button from the cloned body
+            }
+
+            html2pdf()
+                .from(element)
+                .save('GeneratedQuestionPaper.pdf');
+        }
+
+        fetchSelectedQuestions();
+    </script>
+</body>
+</html>
